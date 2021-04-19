@@ -33,6 +33,7 @@ class Tool(benchexec.tools.template.BaseTool2):
         regex_integer = r"(\d+)"
         regex_decimal = r"(\d+\.\d*|\d*\.\d+)"
         regex_scinote = r"(\d\.?\d*[Ee][+\-]?\d+)"
+        regex_basetwo = r"(\d+\*2\*\*\d+)"
         regex_pattern = (
             re.escape(identifier)
             + r"\s*[:=]?\s*(-?("
@@ -41,6 +42,8 @@ class Tool(benchexec.tools.template.BaseTool2):
             + regex_decimal
             + r"|"
             + regex_scinote
+            + r"|"
+            + regex_basetwo
             + r"))(\s|$)"
         )
         regex = re.compile(regex_pattern)
