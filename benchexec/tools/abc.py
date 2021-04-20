@@ -5,6 +5,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+import os
 import re
 import logging
 
@@ -24,7 +25,11 @@ class Tool(benchexec.tools.template.BaseTool2):
         return "ABC"
 
     def cmdline(self, executable, options, task, rlimits):
-        return [executable] + options + [task.single_input_file]
+        if task.single_input_file.endswith((".pec", ".mpec")):
+            new_file_name = os.path.splitext(task.single_input_file)[0] + "-spbn.blif"
+            return [executable] + options + [new_file_name]
+        else:
+            return [executable] + options + [task.single_input_file]
 
     def get_value_from_output(self, output, identifier):
         # search for the identifier in the output and return the number after it
